@@ -8,7 +8,7 @@ interface SetNetwoekProps {
 }
 const NetworksTab: React.FC<SetNetwoekProps> = ({ setNetwork }) => {
     const { walletWithProvider, setWalletWithProvider, setNetworkDetails, networkDetails } = useAccount();
-    const [selectedChain, setSelectedChain] = useState<string>("seploia");
+    const [selectedChain, setSelectedChain] = useState<string>("sepolia");
     useEffect(() => {
         // setNetworkDetails()
     }, [])
@@ -20,9 +20,10 @@ const NetworksTab: React.FC<SetNetwoekProps> = ({ setNetwork }) => {
             const rpcUrl = CHAINS[key].rpcUrls[0];
             const jsonRpcProvider = new JsonRpcProvider(rpcUrl);
             if (walletWithProvider) {
-                walletWithProvider.connect(jsonRpcProvider);
-                setWalletWithProvider(walletWithProvider);
+                const connectedWallet = walletWithProvider.connect(jsonRpcProvider);
+                setWalletWithProvider(connectedWallet);
                 setNetworkDetails(CHAINS[key]);
+                setNetwork(false)
             }
 
         } catch (err) {
@@ -34,8 +35,8 @@ const NetworksTab: React.FC<SetNetwoekProps> = ({ setNetwork }) => {
     return (
         <>
 
-            <View className="mx-4 mt-4 rounded-xl  min-w-[60%] h-[410px] bg-[#111] border border-gray-700 px-5 py-4  ">
-                <Text className="text-white font-semibold mb-3 text-center py-2  ">Change Network</Text>
+            <View className="my-4 ml-7  px-4 py-2  rounded-xl h-[320px] bg-[#111] border border-gray-700 ">
+                {/* <Text className="text-white font-semibold mb-3 text-center py-2  ">Change Network</Text> */}
 
                 <ScrollView
                     showsVerticalScrollIndicator={true}
@@ -48,15 +49,15 @@ const NetworksTab: React.FC<SetNetwoekProps> = ({ setNetwork }) => {
                             className={`mr-3 my-2 py-2 rounded-xl w-full border ${selectedChain === key
                                 ? "border-blue-500 bg-blue-500/20"
                                 : "border-gray-700 bg-gray-800"
-                                } items-center justify-center w-28`}
-                            onPressIn={() => setNetwork(false)}
+                                } items-center flex flex-row gap-5 px-2 w-28`}
+
                         >
 
                             {chain.icon ? (
                                 typeof chain.icon === "function" ? (
                                     <chain.icon width={30} height={30} />
                                 ) : (
-                                    <Image source={chain.icon} style={{ width: 30, height: 30 }} />
+                                    <Image source={chain.icon} style={{ width: 30, height: 30 }} className="rounded-full" />
                                 )
                             ) : null}
 

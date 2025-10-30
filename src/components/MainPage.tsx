@@ -14,8 +14,8 @@ const MainPage = () => {
     const { walletWithProvider } = useAccount();
     const [networkName, setNetworkName] = useState<string>();
     const [balance, setBalance] = useState<string>();
-    const [showSendModal, setShowSendModal] = useState(false);
-    const [network, setNetwork] = useState(false)
+    const [showSendModal, setShowSendModal] = useState<boolean>(false);
+    const [network, setNetwork] = useState<boolean>(false)
     useEffect(() => {
         if (walletWithProvider && walletWithProvider.provider) {
             fetchNetworkName(walletWithProvider);
@@ -76,24 +76,24 @@ const MainPage = () => {
                     </TouchableOpacity>
                 </View>
 
-                <View className="w-full flex min-h-[500px] border  ">
+                <View className="w-full flex min-h-[500px]  ">
                     {!network && (
-                        <View className="bg-[#111]  border px-2 py-2 gap-[165px] rounded-md border-gray-300 w-[60%] flex flex-row">
-                            <Text className="text-blue-300 text-center">
+                        <View className="bg-[#111] my-4 ml-7  px-4 py-2 gap-28 rounded-md  w-[60%] flex flex-row">
+                            <Text className="text-blue-300 text-center w-36   ">
                                 {networkName ? networkName : <ActivityIndicator size="large" color="#A07CFE" />}
                             </Text>
-
-                            <DropDown width={30} height={30} stroke="white" />
+                            <TouchableOpacity
+                                onPress={() => setNetwork(true)}
+                            >
+                                <DropDown width={30} height={30} stroke="white" />
+                            </TouchableOpacity>
                         </View>
                     )}
                     {network && (
-
-
-                        <View className=" bg-[#00000066] justify-end items-center">
-                            <View className="w-[90%]">
-                                <NetworksTab setNetwork={setNetwork} />
-                            </View>
+                        <View className="max-w-[60%]">
+                            <NetworksTab setNetwork={setNetwork} />
                         </View>
+
                     )}
                 </View>
 

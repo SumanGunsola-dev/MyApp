@@ -20,8 +20,9 @@ const WalletCreate = () => {
         const network = await wallet.provider!.getNetwork();
         const balance = await wallet.provider!.getBalance(wallet.address);
         const formattedBalance = parseFloat(ethers.formatEther(balance)).toFixed(4);
+        const networkName = network.name.toUpperCase();
         setBalance(formattedBalance);
-        setNetworkName(network.name);
+        setNetworkName(networkName);
     };
     return (
         <SafeAreaView className=" bg-white min-h-[80vh]  ">
@@ -32,9 +33,9 @@ const WalletCreate = () => {
 
                     {walletWithProvider ? (
                         <View className="flex flex-col justify-between mt-2 space-x-2  h-32 ">
-                            <Text className="text-white text-lg font-semibold">{walletWithProvider instanceof HDNodeWallet ? `Account ${walletWithProvider.index + 1}` : ""}</Text>
+                            <Text className="text-white text-lg font-semibold">{walletWithProvider instanceof HDNodeWallet ? `Account ${walletWithProvider.index + 1}` : <ActivityIndicator />}</Text>
                             <Text className="text-sm font-bold text-gray-50">{`${walletWithProvider.address.slice(0, 10)}...${walletWithProvider.address.slice(-8)}`}</Text>
-                            <Text className="text-white text-3xl font-bold">{`${balance} ${networkName}`}</Text>
+                            <Text className="text-white text-3xl font-bold">{balance && networkName ? ` ${balance} ${networkName}` : <ActivityIndicator size="large" color="#ACFE" />}</Text>
                         </View>
                     ) : (
                         <View className="flex items-center justify-center py-6">
