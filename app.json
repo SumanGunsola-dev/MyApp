@@ -1,4 +1,10 @@
 {
   "name": "MyApp",
-  "displayName": "MyApp"
+  "displayName": "MyApp",
+  "extra": {
+    "eas": {
+      "projectId": "5f210f29-d59a-4271-8de1-cf921a7ac393"
+    }
+  },
+  "owner": "hrithik021"
 }
